@@ -9,10 +9,12 @@ import * as Font from 'expo-font';
 import productReducer from './redux/reducers/productReducer';
 import ShopNavigator from './navigation/ShopNavigator';
 import cartReducer from './redux/reducers/cartReducer';
+import OrderRreducer from './redux/reducers/orderReducer';
 
 const rootReducer = combineReducers({
   products: productReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  order: OrderRreducer
 });
 
 const store = createStore(rootReducer);
