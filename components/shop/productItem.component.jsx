@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { 
-    Button,
     View, 
     Text, 
     StyleSheet, 
@@ -20,7 +19,7 @@ const ProductItem = props => {
     }
 
     return (
-        <TouchableCmp onPress={props.onViewDetail} useForeground>
+        <TouchableCmp onPress={props.onSelect} useForeground>
             <View style={styles.mainView}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{uri: props.image}}/>
@@ -30,8 +29,7 @@ const ProductItem = props => {
                     <Text style = {styles.price}>${props.price.toFixed(2)}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button color={colors.accent} title="View" onPress={props.onViewDetail}/>
-                    <Button color={colors.accent} title='Add To Cart' onPress={props.onAddToCart}/>
+                    {props.children}
                 </View>
             </View>
         </TouchableCmp>

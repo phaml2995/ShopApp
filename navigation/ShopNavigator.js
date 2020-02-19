@@ -13,6 +13,8 @@ import ProductDetailScreen from '../screens/shop/productDetail';
 import CartScreen from '../screens/shop/cart';
 import checkoutScreen from '../screens/shop/checkout';
 import { Ionicons } from '@expo/vector-icons';
+import UserProductScreen from '../screens/user/userProduct';
+import EditProductScreen from '../screens/user/editProduct';
 
 
 const defaultNav = {
@@ -67,12 +69,34 @@ const CheckoutNav = createStackNavigator({
     defaultNavigationOptions: defaultNav
 })
 
+const UserProdNav = createStackNavigator({
+    UserProduct: {
+        screen: UserProductScreen
+    },
+    EditProduct: {
+        screen: EditProductScreen
+    }
+},{
+    navigationOptions:{
+        drawerIcon: drawerConfig => <Ionicons 
+            name= { Platform.OS === 'ios' ? 'ios-create' : 'md-create'}
+            size={23}
+            color={drawerConfig.tintColor}
+        />
+    },
+    defaultNavigationOptions: defaultNav
+})
+
+
 
 const ShopNav = createDrawerNavigator({
     Products: {
         screen: ProductNav
     },
-    Checkout: CheckoutNav
+    Checkout: CheckoutNav,
+    User:{
+        screen: UserProdNav
+    }
 },{
     contentOptions: {
         activeTintColor: colors.primary,

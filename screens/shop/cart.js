@@ -23,6 +23,7 @@ const CartScreen = props => {
         }
         return cartArray.sort((a,b) => a.producId> b.producId ? 1 : -1);
     });
+    
 
     const dispatch = useDispatch();
 
@@ -30,7 +31,7 @@ const CartScreen = props => {
         <View style={styles.mainView}>
             <View style={styles.summary}>
                 <Text style={styles.price}>
-                    Total: <Text style={styles.amount}>${cartAmount.toFixed(2)}</Text>
+                    Total: <Text style={styles.amount}>${Math.round(cartAmount.toFixed(2)*100)/100}</Text>
                 </Text>
                 <Button 
                     color={colors.accent} 
@@ -38,6 +39,7 @@ const CartScreen = props => {
                     disabled={cartItem.length===0}
                     onPress={() => {
                         dispatch(orderActions.addOrder(cartItem,cartAmount))
+                        props.navigation.navigate('Checkout')
                     }}
                 />
             </View>
