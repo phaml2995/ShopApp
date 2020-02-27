@@ -1,4 +1,4 @@
-import { ADD_ORDER } from "../actions/order";
+import { ADD_ORDER, LOAD_ORDER } from "../actions/order";
 import Order from "../../models/order";
 
 const initialState = {
@@ -7,12 +7,17 @@ const initialState = {
 
 const OrderRreducer = (state=initialState,action) => {
     switch(action.type) {
+        case LOAD_ORDER:
+            return {
+                ...state,
+                orders: action.payload
+            }
         case ADD_ORDER:
             const newOrder = new Order(
-                new Date().toString(), 
+                action.payload.id, 
                 action.payload.items, 
                 action.payload.amount,
-                new Date()
+                action.payload.date
             );
             return {
                 ...state,

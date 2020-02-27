@@ -17,7 +17,7 @@ const UserProductScreen = props => {
     }
 
     const deleteHandler = (id) => {
-        Alert.alert("Are you sure you want to delete this item?", [
+        Alert.alert("Warning","Are you sure you want to delete this item?", [
             {
                 text: 'No', 
                 style: 'default'

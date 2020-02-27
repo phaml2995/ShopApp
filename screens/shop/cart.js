@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet,Button, FlatList} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet,Button, FlatList, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux' ;
 import colors from '../../constants/colors';
 import CartItem from '../../components/shop/cartItem.component';
@@ -9,6 +9,8 @@ import * as cartActions from '../../redux/actions/cart';
 import * as orderActions from '../../redux/actions/order';
 
 const CartScreen = props => {
+    const [isLoading, setIsLoading] = useState(false);
+
     const cartAmount = useSelector(state => state.cart.totalAmount);
     const cartItem = useSelector(state => {
         const cartArray  = [];
@@ -27,21 +29,27 @@ const CartScreen = props => {
 
     const dispatch = useDispatch();
 
+    const sendOrderHandler =  async () => {
+        setIsLoading(true);
+        await dispatch(orderActions.addOrder(cartItem,cartAmount));
+        setIsLoading(false);
+        props.navigation.navigate('Checkout');
+    }
+
     return (
         <View style={styles.mainView}>
             <View style={styles.summary}>
                 <Text style={styles.price}>
                     Total: <Text style={styles.amount}>${Math.round(cartAmount.toFixed(2)*100)/100}</Text>
                 </Text>
-                <Button 
+                {isLoading ? (<ActivityIndicator size='large' color={colors.primary}/>) :(
+                    <Button 
                     color={colors.accent} 
                     title='Checkout' 
                     disabled={cartItem.length===0}
-                    onPress={() => {
-                        dispatch(orderActions.addOrder(cartItem,cartAmount))
-                        props.navigation.navigate('Checkout')
-                    }}
-                />
+                    onPress={sendOrderHandler}
+                    />
+                )}
             </View>
             <FlatList 
                 data={cartItem} 
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
     },
     amount: {
         color: colors.primary
-    }
+    },
 });
 
 export default CartScreen;
